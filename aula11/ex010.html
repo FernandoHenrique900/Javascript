@@ -1,0 +1,42 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>DETRAN</title>
+</head>
+<body>
+    <h1>Sistema de Multas</h1>
+    velocidade do carro: <input type="number" name="txtvel" id="txtvel">Km/h
+    <input type="button" value="Verificar" onclick="calcular()">
+    <div id="res"></div>
+    <div id="msg"></div>
+    <script>
+        
+        function calcular(){
+            var txtv = window.document.querySelector('input#txtvel')
+            var res = window.document.querySelector('div#res')
+            var msg = window.document.querySelector('div#msg')
+            var vel = Number(txtv.value)
+            res.innerHTML=`<p>Sua velocidade atual é de <strong>${vel}Km/h</strong>!</p>`
+            
+            /*if(vel>=30 && vel>=41){
+                mgs.innerHTML=`<p>Você está muito abaixo do limite da via<strong>.ACELERA!</strong></p>`
+            }*/
+            if(vel>=61 && vel<=79){
+                msg.innerHTML=`<p>Você foi <strong>"MULTADO!"</strong></p>`
+            }
+            else if(vel>=80 && vel<=120){
+                msg.innerHTML=`<p>Você está muito acima do limite.<strong>"MULTA GRAVE!"</strong></p>`
+            }
+            else if(vel>=121){
+                msg.innerHTML=`<p>Você está extremamente acima do limite.<strong>"MULTA GRAVISSIMA!"</strong></p>`
+            }
+            else{
+                msg.innerHTML=`<p>Dirija com cuidado! :)</p>`
+            }
+        }
+    </script>
+</body>
+</html>
