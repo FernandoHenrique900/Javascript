@@ -1,5 +1,5 @@
 # Javascript
-Exercicios randomicos de javascrip
+Exercicios randomicos de javascript
 
  ## Ferramentas utilizadas:
 
