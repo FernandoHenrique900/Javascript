@@ -6,36 +6,46 @@ const caminhoArquivo = process.argv; // array com os argumentos passados na linh
 const link = caminhoArquivo[2] // link do arquivo
 
 fs.readFile(link,'utf-8', (erro, texto) =>{ // função de callback para ler o arquivo
-    quebraEmParagrafos(texto);
-    //verificaDuplicadas(texto); // imprime o conteúdo do arquivo no console
+    if(erro){
+        console.log('Qual é o erro?', erro.code, erro.message); // imprime o código e a mensagem de erro no console
+        return;
+    }
+    contaPalavras(texto);   // chama a função contaPalavras passando o texto como argumento
 })
-//Instruções:
-//1 - Criar uma função que quebre o texto em parágrafos
-//2 - Criar uma função que verifique palavras duplicadas em cada parágrafo
-//3 - Imprimir no console o parágrafo e as palavras duplicadas encontradas
 
-
-//criar um array de palavras
-//contar as ocorrencias
-//montar um objeto c/ 
-
-
-// função que quebra o texto em parágrafos
-function quebraEmParagrafos(texto){
-    const paragrafos = texto.toLowerCase().split('\n'); // quebra o texto em parágrafos, convertendo para minúsculas
-    const contagem = paragrafos.flatMap((paragrafo) => {// flatMap() - retorna um novo array com todos os elementos de sub-array concatenados em ordem
+function contaPalavras(texto){
+    const paragrafos = extraiParagrafos(texto); // chama a função extraiParagrafos passando o texto como argumento
+        const contagem = paragrafos.flatMap((paragrafo) => {// flatMap() - retorna um novo array com todos os elementos de sub-array concatenados em ordem
         if(!paragrafo) return[];
         return verificaDuplicadas(paragrafo);
     })
-    // .filter((paragrafo)=>paragrafo)
-    // .map((paragrafo) =>{ // filtra os parágrafos vazios e mapeia os parágrafos restantes
-    //     return verificaDuplicadas(paragrafo); // retorna o objeto com as palavras duplicadas encontradas no parágrafo
-    // })
-    //OBS: flatMap é mais performatico do que usar 2 métodos separados (filter e map)
-    //[1,2[3,4]]
-    //[1,2,3,4]
-    console.log(contagem);
+        console.log(contagem);}
+
+function extraiParagrafos(texto){
+    return texto.toLowerCase().split('\n'); // quebra o texto em parágrafos, convertendo para minúsculas
 }
+
+/*Instruções:
+1 - Criar uma função que quebre o texto em parágrafos
+2 - Criar uma função que verifique palavras duplicadas em cada parágrafo
+3 - Imprimir no console o parágrafo e as palavras duplicadas encontradas
+
+
+criar um array de palavras
+contar as ocorrencias
+montar um objeto c/ 
+*/
+
+
+
+/*  .filter((paragrafo)=>paragrafo)
+    .map((paragrafo) =>{ // filtra os parágrafos vazios e mapeia os parágrafos restantes
+        return verificaDuplicadas(paragrafo); // retorna o objeto com as palavras duplicadas encontradas no parágrafo
+     })
+    OBS: flatMap é mais performatico do que usar 2 métodos separados (filter e map)
+    [1,2[3,4]]
+    [1,2,3,4]*/
+
 //função de expressão regular p/ substituir caracteres especias "global" na aplicacão por 'nada'.
 function limpaPalavras(palavra) {
   return palavra.replace(/[.,\/#!$%\^&\*;:{}=\-_`~()]/g, ''); //REGEX - EXPRESSÃO REGULAR - remove caracteres especiais
