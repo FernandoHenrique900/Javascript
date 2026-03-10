@@ -1,21 +1,5 @@
-//const caminhoArquivo = require('./arquivos/texto-web.txt')
 
-const fs = require('fs') // módulo de file system do node
-const trataErros = require('./erros/funcoesErro.js'); // importa a função trataErros do módulo funcoesErro.js
-
-const caminhoArquivo = process.argv; // array com os argumentos passados na linha de comando
-const link = caminhoArquivo[2] // link do arquivo
-
-fs.readFile(link,'utf-8', (erro, texto) =>{ // função de callback para ler o arquivo
-    try{ // tenta executar o código dentro do bloco try
-        if(erro) throw erro; // se houver um erro, lança o erro
-        contaPalavras(texto);   // chama a função contaPalavras passando o texto como argumento
-    }catch(erro){ // captura o erro caso ocorra
-        console.log ('Erro:', trataErros(erro)); // chama a função trataErros passando o erro como argumento
-    }
-    })
-
-function contaPalavras(texto){
+export function contaPalavras(texto){
     const paragrafos = extraiParagrafos(texto); // chama a função extraiParagrafos passando o texto como argumento
         const contagem = paragrafos.flatMap((paragrafo) => {// flatMap() - retorna um novo array com todos os elementos de sub-array concatenados em ordem
         if(!paragrafo) return[];
