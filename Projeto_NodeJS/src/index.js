@@ -4,8 +4,11 @@ export function contaPalavras(texto){
         const contagem = paragrafos.flatMap((paragrafo) => {// flatMap() - retorna um novo array com todos os elementos de sub-array concatenados em ordem
         if(!paragrafo) return[];
         return verificaDuplicadas(paragrafo);
-    })
-        console.log(contagem);}
+    })  
+        console.log(contagem);
+        return contagem;
+      
+    }
 
 function extraiParagrafos(texto){
     return texto.toLowerCase().split('\n'); // quebra o texto em parágrafos, convertendo para minúsculas

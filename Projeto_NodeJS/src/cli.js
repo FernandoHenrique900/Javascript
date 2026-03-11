@@ -2,16 +2,30 @@
 
 import fs from 'fs'; // módulo de file system do node
 import trataErros from './erros/funcoesErro.js'; // importa a função trataErros do módulo funcoesErro.js
-import contaPalavras from './index.js'; // importa a função contaPalavras do módulo index.js
+import {contaPalavras} from './index.js'; // importa a função contaPalavras do módulo index.js
 
 const caminhoArquivo = process.argv; // array com os argumentos passados na linha de comando
 const link = caminhoArquivo[2] // link do arquivo
+const endereco = caminhoArquivo[3] // endereço do arquivo
 
 fs.readFile(link,'utf-8', (erro, texto) =>{ // função de callback para ler o arquivo
     try{ // tenta executar o código dentro do bloco try
         if(erro) throw erro; // se houver um erro, lança o erro
-        contaPalavras(texto);   // chama a função contaPalavras passando o texto como argumento
+        const resultado = contaPalavras(texto);   // chama a função contaPalavras passando o texto como argumento
+        criaESalvaArquivo(resultado, endereco); // chama a função criaESalvaArquivo passando o resultado e o endereco como argumento
     }catch(erro){ // captura o erro caso ocorra
-        console.log ('Erro:', trataErros(erro)); // chama a função trataErros passando o erro como argumento
+        trataErros(erro); // chama a função trataErros passando o erro como argumento
     }
     })
+
+async function criaESalvaArquivo(listaPalavras, endereco){
+    const arquivoNovo = `${endereco}/resultado.txt`;
+    const textoPalavras = JSON.stringify(listaPalavras); // converte o array de palavras em uma string JSON
+    try{
+        await fs.promises.writeFile(arquivoNovo, textoPalavras); // escreve o conteúdo do arquivo
+        console.log('Arquivo salvo com sucesso!');
+    }catch(erro){
+        throw erro; // lança o erro caso ocorra
+        //console.log ('Erro:', trataErros(erro)); // chama a função trataErros passando o erro como argumento
+        }
+    }
