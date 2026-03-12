@@ -3,6 +3,7 @@
 import fs from 'fs'; // módulo de file system do node
 import trataErros from './erros/funcoesErro.js'; // importa a função trataErros do módulo funcoesErro.js
 import {contaPalavras} from './index.js'; // importa a função contaPalavras do módulo index.js
+import { json } from 'stream/consumers';
 
 const caminhoArquivo = process.argv; // array com os argumentos passados na linha de comando
 const link = caminhoArquivo[2] // link do arquivo
@@ -18,14 +19,29 @@ fs.readFile(link,'utf-8', (erro, texto) =>{ // função de callback para ler o a
     }
     })
 
-async function criaESalvaArquivo(listaPalavras, endereco){
+// função assíncrona para criar e salvar o arquivo
+// async function criaESalvaArquivo(listaPalavras, endereco){
+//     const arquivoNovo = `${endereco}/resultado.txt`;
+//     const textoPalavras = JSON.stringify(listaPalavras); // converte o array de palavras em uma string JSON
+//     try{
+//     await fs.promises.writeFile(arquivoNovo, textoPalavras) // escreve o conteúdo do arquivo
+//         console.log('arquivo criado');
+//         }catch(erro){
+//             throw erro;
+//         }
+//     }
+
+
+function criaESalvaArquivo(listaPalavras, endereco){
     const arquivoNovo = `${endereco}/resultado.txt`;
     const textoPalavras = JSON.stringify(listaPalavras); // converte o array de palavras em uma string JSON
-    try{
-        await fs.promises.writeFile(arquivoNovo, textoPalavras); // escreve o conteúdo do arquivo
-        console.log('Arquivo salvo com sucesso!');
-    }catch(erro){
-        throw erro; // lança o erro caso ocorra
-        //console.log ('Erro:', trataErros(erro)); // chama a função trataErros passando o erro como argumento
-        }
+    
+    fs.promises.writeFile(arquivoNovo, textoPalavras) // escreve o conteúdo do arquivo
+        .then(() =>{ // then é executado quando a promessa é resolvida
+            console.log('Arquivo criado')
+        })
+        .catch((erro) => {  // catch é executado quando a promessa é rejeitada
+            throw erro
+        })
+        .finally(() => console.log('Operação finalizada'))// finally é executado independentemente de a promessa ser resolvida ou rejeitada
     }
