@@ -1,3 +1,6 @@
+/*DUVIDAS SOBRE SINCRONISMO? Veja o vídeo abaixo
+    https://www.youtube.com/watch?v=hOhX8__dMt0
+*/
 
 export function contaPalavras(texto){
     const paragrafos = extraiParagrafos(texto); // chama a função extraiParagrafos passando o texto como argumento
